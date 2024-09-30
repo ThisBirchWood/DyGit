@@ -25,8 +25,11 @@ class config:
         """ Returns the value of the given key, or default if key doesn't exist. """
         return self.values.get(key, default)
 
-    def get_object_directory(self):
+    def get_object_directory(self) -> str:
         return self.get("object_directory")
     
-    def get_git_directory(self):
+    def get_git_directory(self) -> str:
         return self.get("git_directory")
+    
+    def get_main_directory(self) -> str:
+        return self.get("main_directory")

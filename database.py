@@ -11,18 +11,23 @@ class database:
         return open(file, "r", encoding="utf8").read()
     
     def _create_file(self, directory, filename, data):
-        with open(os.path.join(directory, filename), "wb") as file:
-            file.write(data)
+        path = os.path.join(directory, filename)
+        if os.path.isfile(path):
+            with open(path, "wb") as file:
+                file.write(data)
 
     def _create_directory(self, directory_path):
         if not os.path.exists(directory_path):
             os.makedirs(directory_path)
 
+    def _split_hash(self, hash: str):
+        return hash[:2], hash[2:]
+
     def _add_object(self, obj):
         serialized_blob = hash.serialize_object(obj)
         sha1_hash = hash.sha1_hash(serialized_blob)
 
-        directory, file_name = sha1_hash[:2], sha1_hash[2:]
+        directory, file_name = self._split_hash(sha1_hash)
         directory = os.path.join(self.object_directory, directory)
 
         self._create_directory(directory)

@@ -33,3 +33,6 @@ class config:
     
     def get_main_directory(self) -> str:
         return self.get("main_directory")
+    
+    def get_commit_file(self) -> str:
+        return self.get("commit_file")

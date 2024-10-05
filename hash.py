@@ -1,9 +1,10 @@
 import hashlib, pickle
 
-# BUF_SIZE is totally arbitrary, change for your app!
-
 def serialize_object(obj):
     return pickle.dumps(obj)
+
+def deserialize_object(obj):
+    return pickle.loads(obj)
 
 def sha1_hash(s_obj):
     sha1 = hashlib.sha1()

@@ -1,5 +1,4 @@
 from blob import Blob
-from tree import Tree, Tree_Entry
 import hash
 
 class Tree_Entry():

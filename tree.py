@@ -1,30 +1,27 @@
 from blob import Blob
-import hash
+import hash, database
 
 class Tree_Entry():
-    def __init__(self, _filepath: str, _obj):
-        self.filepath = _filepath
-        self.obj = _obj
-
-        if isinstance(self.obj, Tree):
-            self.tree = True
-        elif isinstance(self.obj, Blob):
-            self.tree = False
-        else:
-            raise TypeError(f"Tree Entry must take a Tree or Blob object type, not {type(self.obj)}")
+    def __init__(self, _path: str, _hash: str, _tree: bool):
+        self.path = _path
+        self.hash = _hash
+        self.tree = _tree
 
 class Tree:
     def __init__(self, path: str):
         self.path = path
         self.children = []
 
-    def list_children(self):
+    def _list_files(self, indent=0):
         for child in self.children:
-            child_hash = hash.sha1_hash(hash.serialize_object(child))
-            if child.tree == True:
-                print(f"tree {child_hash}")
+            ind = indent
+            i = "\t" * indent
+            if child.tree:
+                print(i + "dir----" + child.path)
+                tree = database.Database().get_tree(child.hash)
+                tree._list_files(indent=ind+1)
             else:
-                print(f"blob {child_hash}")
+                print(i + "file---" + child.path)
 
     def add_child(self, obj: Tree_Entry):
         self.children.append(obj)

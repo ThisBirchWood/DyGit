@@ -2,6 +2,8 @@ from hash import serialize_object, deserialize_object, sha1_hash
 from zlib import compress as zcompress, decompress as zdecompress
 from config_reader import ConfigReader
 from file_manager import FileManager
+from blob import Blob
+from tree import Tree
 
 HASH_DIRECTORY_SPLIT = 2
 
@@ -49,15 +51,22 @@ class ObjectDatabase:
         return deserialize_object(serialized_object)
     
     ## Public Methods
-    #def add_file(self, path: str) -> str:
-
+    def add_blob(self, b: Blob) -> str:
+        """ 
+        Adds a blob to the object store, returns hash
+        NOTE: Adding blobs only hashes the data, not the entire object
+        """
+        return self._add_data(b.data)
+    
+    def add_tree(self, t: Tree) -> str:
+        """
+        Adds a tree to the object store, returns hash
+        """
+        return self._add_object(t)
     
 
 if __name__ == "__main__":
     d = ObjectDatabase(r"C:\Users\Dylan De Faoite\Documents\Chord Gen\.git\objects")
-    c = ConfigReader()
-    j = d._add_object(c)
-    print(d._get_object(j))
     
 
 

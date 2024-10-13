@@ -35,8 +35,8 @@ class ConfigReader:
     def get_gitignore_file(self) -> str:
         return self.get("git_ignore_file")
     
-    def get_commit_directory_name(self) -> str:
-        return self.get("commit_directory_name")
+    def get_branches_directory_name(self) -> str:
+        return self.get("branches_directory_name")
     
     def get_current_branch_file(self) -> str:
         return self.get("current_branch_file")

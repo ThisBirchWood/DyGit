@@ -4,6 +4,7 @@ from config_reader import ConfigReader
 from file_manager import FileManager
 from blob import Blob
 from tree import Tree
+from commit import Commit
 
 HASH_DIRECTORY_SPLIT = 2
 
@@ -60,9 +61,34 @@ class ObjectDatabase:
     
     def add_tree(self, t: Tree) -> str:
         """
-        Adds a tree to the object store, returns hash
+        Adds a tree object to the object store, returns hash
         """
         return self._add_object(t)
+    
+    def add_commit(self, c: Commit) -> str:
+        """
+        Adds a commit object to object store, returns hash
+        """
+        return self._add_object(c)
+    
+    def get_blob(self, h: str) -> Blob:
+        """
+        Returns blob object from blob's data hash
+        """
+        blob_data = self._get_data(h)
+        return Blob(blob_data)
+    
+    def get_tree(self, h: str) -> Tree:
+        """
+        Returns tree object from tree hash
+        """
+        return Tree(self._get_object(h))
+    
+    def get_commit(self, h: str) -> Commit:
+        """
+        Returns commit object from commit hash
+        """
+        return Commit(self._get_object(h))
     
 
 if __name__ == "__main__":
